@@ -1,0 +1,9 @@
+{"namespace": "model.avro",
+  "type": "record",
+  "name": "Item",
+  "fields": [
+    {"name": "id", "type": "long"},
+    {"name": "name", "type": "string"},
+    {"name": "price", "type": "float"}
+  ]
+}

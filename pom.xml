@@ -6,10 +6,11 @@
 	<groupId>bills</groupId>
 	<artifactId>bills-processer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+
+    <packaging>pom</packaging>
 
 	<name>bills-processer</name>
-	<description></description>
+	<description>Consumes kafka messages related to bills</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,6 +25,8 @@
 		<java.version>1.8</java.version>
 		<spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
 		<avro.version>1.8.2</avro.version>
+		<elasticsearch.version>5.5.1</elasticsearch.version>
+		<restassured.version>2.9.0</restassured.version>
 	</properties>
 
 	<dependencies>
@@ -54,6 +57,31 @@
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
 			<version>${avro.version}</version>
+		</dependency>
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<!-- elastic -->
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${elasticsearch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>rest</artifactId>
+			<version>${elasticsearch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${restassured.version}</version>
 		</dependency>
 	</dependencies>
 

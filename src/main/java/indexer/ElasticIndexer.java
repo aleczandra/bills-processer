@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import avro.shaded.com.google.common.collect.ImmutableMap;
+import bills.billsprocesser.utils.Converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import elastic.ElasticClient;
 import model.avro.Bill;
@@ -21,8 +22,8 @@ public class ElasticIndexer {
 
     public void indexDocument(Bill bill) throws IOException {
         RestClient client = ElasticClient.createClient();
-        ImmutableMap params = params("pretty").build();
-        Response response = client.performRequest("POST", "/bills", params, entity(bill));
+        ImmutableMap params = params().build();
+        Response response = client.performRequest("PUT", "/billsindex/bills/" + bill.getId(), params, entity(Converter.fromAvroBillToModelBill(bill)));
     }
 
 
@@ -33,7 +34,9 @@ public class ElasticIndexer {
             throw new RuntimeException(e);
         }
     }
-    protected String toJson(Bill object) {
+
+    //TODO: this is not generic...so one day has to be made more generic
+    protected String toJson(bills.billsprocesser.model.Bill object) {
         try {
             return mapper.writer().writeValueAsString(object);
         } catch (JsonProcessingException e) {
@@ -44,7 +47,8 @@ public class ElasticIndexer {
     protected HttpEntity entity(Map<String, Object> object) {
         return new StringEntity(toJson(object), ContentType.APPLICATION_JSON);
     }
-    protected HttpEntity entity(Bill object) {
+
+    protected HttpEntity entity(bills.billsprocesser.model.Bill object) {
         return new StringEntity(toJson(object), ContentType.APPLICATION_JSON);
     }
     public static ImmutableMap.Builder params() {

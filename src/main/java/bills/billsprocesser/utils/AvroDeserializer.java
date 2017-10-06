@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
+import model.avro.Bill;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.Decoder;
@@ -20,7 +21,11 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AvroDeserializer.class);
 
-    protected final Class<T> targetType;
+    protected Class<T> targetType = null;
+
+    public AvroDeserializer() {
+        new AvroDeserializer<>(Bill.class);
+    }
 
     public AvroDeserializer(Class<T> targetType) {
         this.targetType = targetType;
@@ -46,7 +51,7 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
                 LOGGER.debug("data='{}'", DatatypeConverter.printHexBinary(data));
 
                 DatumReader<GenericRecord> datumReader =
-                    new SpecificDatumReader<>(targetType.newInstance().getSchema());
+                    new SpecificDatumReader<>(new Bill().getSchema());
                 Decoder decoder = DecoderFactory.get().binaryDecoder(data, null);
 
                 result = (T) datumReader.read(null, decoder);

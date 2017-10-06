@@ -26,6 +26,11 @@ public class ElasticIndexer {
         Response response = client.performRequest("PUT", "/billsindex/bills/" + bill.getId(), params, entity(Converter.fromAvroBillToModelBill(bill)));
     }
 
+    public void indexDocument(bills.billsprocesser.model.Bill bill) throws IOException {
+        RestClient client = ElasticClient.createClient();
+        ImmutableMap params = params().build();
+        Response response = client.performRequest("PUT", "/billsindex/bills/" + bill.getId(), params, entity(bill));
+    }
 
     protected String toJson(Map<String, Object> object) {
         try {

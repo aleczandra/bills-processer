@@ -7,7 +7,7 @@
 	<artifactId>bills-processer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
 	<name>bills-processer</name>
 	<description>Consumes kafka messages related to bills</description>
